@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        /*
+            $.ajax('', {
+                // method, default : get
+                type : '',   //method X
+                // 서버로 전송할 데이터의 content-type , default : application/x-www-form-urlencoded , 명시한 경우 JSON : application/json
+                contentType : '',
+                // 서버로 전송할 데이터 : object => queryString
+                data : {},   //body X
+                beforeSend : function(xhr){ //잘쓰지는 않음  => 토큰보낼때(보안상) -> 데이터는 아닌데 알려줘야함  ajax사용할때 서버통신하기 직전 추가적으로 beforeSend안에서 작업
+
+                }
+            })
+            .done(result => console.log(result))
+            .done(result => console.log(result))
+            .done(result => console.log(result))
+            .fail(err => console.log(err));
+        */
+    
+        //전체조회
+        $.ajax('http://localhost:8080/app/emps')
+        .done(result =>{    //.then -> 통신 성공한 경우만 체크 (200, 300)
+            console.log(result);
+        })
+        .fail(err => console.log(err)); //.catch -> 통신 실패한 경우
+
+        //단건조회
+        $.ajax('http://localhost:8080/app/emps/100')
+        .done(result =>{   
+            console.log('Emp Info',result);
+        })
+        .fail(err => console.log(err)); 
+
+        //등록
+        let info = {
+            lastName : 'Ann',
+            email : 'ann@naver.com', //유니크 제약조건
+            hireDate : '2024-01-18', //yyyy-MM-dd 폼
+            jobId : 'IT_PROG', //외래키 제약조건
+            salary : 1000,
+        }
+        $.ajax('http://localhost:8080/app/emps',{
+            type : 'post',
+            contentType : 'application/json',
+            data : JSON.stringify(info),
+        })
+        .done(result =>{   
+            console.log('Emp Insert',result);
+        })
+        .fail(err => console.log(err)); 
+
+        //수정
+
+
+
+        
+        //삭제
+
+
+
+
+
+    </script>
+</body>
+</html>
